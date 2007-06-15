@@ -1,0 +1,36 @@
+TypographyHelper
+================
+
+This is a Ruby copy of Django's Typogrify filters:
+<http://code.google.com/p/typogrify/>
+
+Widont was coined by Shaun Inman:
+<http://shauninman.com/archive/2006/08/22/widont_wordpress_plugin>
+
+widont_single is taken from <http://mucur.name/posts/widon-t-and-smartypants-helpers-for-rails>
+
+Also uses RubyPants Gems <http://chneukirchen.org/blog/static/projects/rubypants.html> originally SmartyPants by John Gruber <http://daringfireball.net/projects/smartypants/>
+
+A set of filters to provide typographical hooks to Rails views. Basically a Ruby port of the Typogrify template filters for Django.
+
+I don't know much about Typography, but I do know that curly quotes look better than straight ones, that HTML entities look better than plain-text, and that Django users shouldn't have all the fun.
+
+Included filters (filter name in parentheses):
+
+* Widon't (*widont* also *widont_single* for one-line transformations)
+* RubyPants (*rubypants* requires rubypants gem)
+* Initial quotes wrapped in class='dquo' or class='quo' depending on if they are single or double (*initial_quotes*)
+* Ampersands wrapped in class='amp' (*amp*)
+* Multiple adjacent capital letters wrapped in class='caps' (*caps*)
+* A do-all filter (*rubyshirt*)
+* A do-all filter (*rubyoutfit* aliased as *t* to keep views clean) that runs *rubypants* and *rubyshirt* in that order
+* A do-all filter that includes *rubyoutfit* and Rail's *h* function (*th*)
+
+**To get it**, navigate to your Rails root directory
+
+**To use it**, simply add the appropriate function name before your <%=  %> output  
+(e.g. change <%= @article %> to <%= rubyshirt @article %>)
+
+svn co https://typography-helper.googlecode.com/svn/rails/trunk/ vendor/plugins/typography_helper
+
+If you have any suggestions or comments, let me know <luke@mrturtle.com>
