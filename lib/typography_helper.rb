@@ -6,7 +6,8 @@ module TypographyHelper
 	# converts a & surrounded by optional whitespace or a non-breaking space
 	# to the HTML entity and surrounds it in a span with a styled class
 	def amp(text)
-		text.gsub(/(\s|&nbsp;)&(\s|&nbsp;)/,'\1<span class="amp">&amp;</span>\2')
+		text.gsub(/<(code|pre).+?<\/\1>|(\s|&nbsp;)&(\s|&nbsp;)/) {|str|
+		$1 ? str : $2 + '<span class="amp">&amp;</span>' + $3 }
 	end
 
 	# based on http://mucur.name/posts/widon-t-and-smartypants-helpers-for-rails
@@ -30,14 +31,16 @@ module TypographyHelper
 	# surrounds two or more consecutive captial letters, perhaps with interspersed digits and periods
 	# in a span with a styled class
 	def caps(text)
-		text.gsub(/(\s|&nbsp;|^)([A-Z][A-Z\d\.]{1,})/,'\1<span class="caps">\2</span>')
+		text.gsub(/<(code|pre).+?<\/\1>|(\s|&nbsp;|^|'|")([A-Z][A-Z\d\.]{1,})(?!\w)/) {|str|
+		$1 ? str : $2 + '<span class="caps">' + $3 + '</span>' }
 	end
 
 	# encloses initial single or double quote, or their entities
 	# (optionally preceeded by a block element and perhaps an inline element)
 	# with a span that can be styled
 	def initial_quotes(text)
-		text.gsub(/((?:<(?:h[1-6]|p|li|dt|dd)[^>]*>|^)\s*(?:<(?:a|em|strong|span)[^>]*>)?)('|&#8216;|"|&#8220;)/) {|q| $1 + "<span class=\"#{'d' if $2=='&#8220;' or $2=='"'}quo\">#{$2}</span>"}
+		# $1 is the initial part of the string, $2 is the quote or entitity, and $3 is the double quote
+		text.gsub(/((?:<(?:h[1-6]|p|li|dt|dd)[^>]*>|^)\s*(?:<(?:a|em|strong|span)[^>]*>)?)('|&#8216;|("|&#8220;))/) {$1 + "<span class=\"#{'d' if $3}quo\">#{$2}</span>"}
 	end
 
 	# uses RubyPants to transform various typographical thingys to proper HTML entities
