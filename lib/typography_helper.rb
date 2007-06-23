@@ -6,6 +6,7 @@ module TypographyHelper
 	# converts a & surrounded by optional whitespace or a non-breaking space
 	# to the HTML entity and surrounds it in a span with a styled class
 	def amp(text)
+		# $1 is an excluded HTML tag, $2 is the part before the caps and $3 is the amp match
 		text.gsub(/<(code|pre).+?<\/\1>|(\s|&nbsp;)&(\s|&nbsp;)/) {|str|
 		$1 ? str : $2 + '<span class="amp">&amp;</span>' + $3 }
 	end
@@ -31,6 +32,7 @@ module TypographyHelper
 	# surrounds two or more consecutive captial letters, perhaps with interspersed digits and periods
 	# in a span with a styled class
 	def caps(text)
+		# $1 is an excluded HTML tag, $2 is the part before the caps and $3 is the caps match
 		text.gsub(/<(code|pre).+?<\/\1>|(\s|&nbsp;|^|'|")([A-Z][A-Z\d\.]{1,})(?!\w)/) {|str|
 		$1 ? str : $2 + '<span class="caps">' + $3 + '</span>' }
 	end
