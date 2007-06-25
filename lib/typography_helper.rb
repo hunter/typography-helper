@@ -18,7 +18,15 @@ module TypographyHelper
 	# before an optional closing element (a, em, span, strong) 
 	# before a closing tag (p, h[1-6], li, dt, dd) or the end of the string
 	def widont(text)
-		text.gsub(/(\s+)((<[^>]+>\s*)?[^<>\s]+(<\/(a|em|span|strong)[^>]*>\s*)*(<\/(p|h[1-6]|li|dt|dd)|$))/, '&nbsp;\2')
+		text.gsub(%r/
+			(\s+)																		# some whitespace group 1
+			(																				# capture group 2
+				(?:<(a|em|span|strong)[^>]*?>\s*)?			# an optional opening tag followed by optional spaces
+				[^<\s]+																# the matched word itself
+				(?:<\/(a|em|span|strong)[^>]*?>\s*)*	# zero or more closing tags followed by zero or more spaces
+				(?:<\/(p|h[1-6]|li|dt|dd)|$)					# a closing element or end of line
+			)
+			/x, '&nbsp;\2')
 	end
 
 	# speedier method for one-line elements only (if you care about performance)
