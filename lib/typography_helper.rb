@@ -24,7 +24,7 @@ module TypographyHelper
 				(<(a|em|span|strong)[^>]*?>\s*)?				# an optional opening tag followed by optional spaces
 				[^<>\s]+																# the matched word itself
 				(?:<\/(a|em|span|strong)[^>]*?>\s*)*		# zero or more inline closing tags followed by zero or more spaces
-				(?:<\/(p|h[1-6]|li|dt|dd)|$)						# a closing element or end of line
+				(?:(<\/p|h[1-6]|li|dt|dd)|$)						# a closing element or end of line
 			/x, '&nbsp;\2')
 	end
 
